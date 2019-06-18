@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Log in to Codefellowship</title>
+    </head>
+    <body>
+    <h1>Sign up</h1>
+    <form action="/users" method="POST">
+        <p>Username: <input name="username" /></p>
+        <p>Password: <input name="password" /></p>
+        <p>First Name: <input name="firstName" /></p>
+        <p>Last name: <input name="lastName" /></p>
+        <p>Bio: <input name="bio" /></p>
+        <p>Date of birth: <input type="datetime" name="dateOfBirthString" /></p>
+        <input type="submit" />
+    </form>
+
+    </body>
+</html>
