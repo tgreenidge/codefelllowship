@@ -62,6 +62,8 @@ public class AppUser implements UserDetails {
         return bio;
     }
 
+    public Long getId() {return id; }
+
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }

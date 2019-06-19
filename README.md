@@ -8,3 +8,5 @@ routes
 /users - post
 /signup - sign up for app
 /login -  login to app
+/myprofile
+/users/{id}

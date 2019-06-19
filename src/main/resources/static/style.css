@@ -1,0 +1,14 @@
+body {
+    margin: 2em;
+    background: #008080;
+}
+
+a {
+    font-size: 25px;
+    color: white;
+}
+
+#profile {
+    width: 100px;
+    height: 100px;
+}
