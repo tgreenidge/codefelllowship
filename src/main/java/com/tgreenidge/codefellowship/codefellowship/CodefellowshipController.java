@@ -11,9 +11,7 @@ import java.security.Principal;
 public class CodefellowshipController {
 
     @GetMapping("/")
-    public String getHome(Principal p, Model m) {
-        //System.out.println(p.getName());
-        m.addAttribute("principal", p);
+    public String getHome() {
         return "home";
     }
 }

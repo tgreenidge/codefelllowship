@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/style.css" rel="stylesheet" >
 </head>
 <body>
-
+<h3> <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h3>
+    <img id="profile" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
+    <div><span><strong>Username: </strong> <span th:text="${user.username}"></span></span></div>
+    <div><span><strong>Date of Birth: </strong> <span th:text="${user.dateOfBirth}"></span></span></div>
+    <p><span><strong>Bio: </strong> <span th:text="${user.bio}"></span></span></p>
 </body>
 </html>
