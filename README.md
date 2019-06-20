@@ -10,3 +10,4 @@ routes
 /login -  login to app
 /myprofile
 /users/{id}
+/feed
