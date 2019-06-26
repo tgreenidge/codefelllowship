@@ -7,10 +7,20 @@
     <link href="/style.css" rel="stylesheet" >
 </head>
 <body>
+<div th:replace="fragments/header :: header">...</div>
+
 <h3> <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h3>
     <img id="profile" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
     <div><span><strong>Username: </strong> <span th:text="${user.username}"></span></span></div>
     <div><span><strong>Date of Birth: </strong> <span th:text="${user.dateOfBirth}"></span></span></div>
     <p><span><strong>Bio: </strong> <span th:text="${user.bio}"></span></span></p>
+
+<h3>Your Posts</h3>
+
+<ul th:each="post : ${user.getPosts()}">
+    <li th:text="${post.body}"></li>
+</ul>
+
+
 </body>
 </html>
