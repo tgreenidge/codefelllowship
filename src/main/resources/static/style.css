@@ -12,3 +12,10 @@ a {
     width: 100px;
     height: 100px;
 }
+
+.header {
+    background: black;
+    height: 80px;
+    padding: 2em;
+    width: 100%;
+}

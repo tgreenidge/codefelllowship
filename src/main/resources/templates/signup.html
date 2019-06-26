@@ -7,6 +7,8 @@
         <link href="/style.css" rel="stylesheet" >
     </head>
     <body>
+    <div th:replace="fragments/header :: header">...</div>
+
     <h1>Sign up</h1>
     <form action="/users" method="POST">
         <p>Username: <input name="username" /></p>

@@ -3,12 +3,10 @@ package com.tgreenidge.codefellowship.codefellowship;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class AppUser implements UserDetails {
@@ -16,6 +14,10 @@ public class AppUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
 
+    @OneToMany(mappedBy = "creator")
+    List<Post> posts;
+
+    @Column(unique = true)
     String username;
     String password;
     String firstName;
@@ -68,6 +70,38 @@ public class AppUser implements UserDetails {
         return dateOfBirth;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -87,4 +121,5 @@ public class AppUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
