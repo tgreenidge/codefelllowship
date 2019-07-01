@@ -20,3 +20,5 @@ to run:
 ```/posts``` - post request for creating a post
 
 ```/posts/add`` - get request to show form to create post
+
+```/feed``` - view all of the posts from the users that they follow
