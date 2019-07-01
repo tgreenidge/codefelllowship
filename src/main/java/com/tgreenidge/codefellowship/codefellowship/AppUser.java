@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class AppUser implements UserDetails {
@@ -25,6 +26,9 @@ public class AppUser implements UserDetails {
     String bio;
     LocalDate dateOfBirth;
 
+    @ManyToMany
+    Set<AppUser> friends;
+
     public AppUser() {}
 
     public AppUser(String username, String password, String firstName, String lastName, String bio, LocalDate dateOfBirth) {
@@ -35,7 +39,6 @@ public class AppUser implements UserDetails {
         this.bio = bio;
         this.dateOfBirth =  dateOfBirth;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -122,4 +125,11 @@ public class AppUser implements UserDetails {
         return true;
     }
 
+    public Set<AppUser> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<AppUser> friends) {
+        this.friends = friends;
+    }
 }

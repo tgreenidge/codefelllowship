@@ -75,6 +75,34 @@ public class AppUserController {
         return "userinfo";
     }
 
+    @PostMapping("/users/{id}/friends")
+    public RedirectView addFriend(@PathVariable Long id, Long friend, Principal p, Model m) {
+        AppUser currentUser = appUserRepository.findById(id).get();
+        AppUser newFriend = appUserRepository.findById(friend).get();
+        // use the principal: check both  belong to the currently logged in user
+        if(!currentUser.username.equals(p.getName()) || !newFriend.username.equals(p.getName())) {
+            throw new UserDoesNotBelongToYouException("You cannot be friends with yourself.");
+        }
+        // make them friends
+        currentUser.friends.add(newFriend);
+        newFriend.friends.add(currentUser);
+        appUserRepository.save(currentUser);
+        appUserRepository.save(newFriend);
+        // redirect back to the current user
+        return new RedirectView("/users/" + id);
+    }
+
+    @GetMapping("/feed")
+    public String getFeed(Principal p, Model m) {
+        //System.out.println(p.getName());
+        AppUser user = appUserRepository.findByUsername(p.getName());
+        m.addAttribute("user", user);
+
+        return "userinfo";
+    }
+
+
+
     // came from https://stackoverflow.com/questions/2066946/trigger-404-in-spring-mvc-controller
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     class UserDoesNotBelongToYouException extends RuntimeException {
