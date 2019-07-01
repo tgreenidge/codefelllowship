@@ -26,7 +26,7 @@ public class AppUser implements UserDetails {
     String bio;
     LocalDate dateOfBirth;
 
-    @ManyToMany
+    @OneToMany
     Set<AppUser> friends;
 
     public AppUser() {}

@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class AppUserController {
     PasswordEncoder bCryptPasswordEncoder;
 
 
-    @PostMapping("/users")
+    @PostMapping("/users/create")
     public RedirectView createUser(String username, String password, String firstName, String lastName, String bio, String dateOfBirthString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dateOfBirth;
@@ -43,16 +44,20 @@ public class AppUserController {
         return new RedirectView("/myprofile");
     }
 
-//    @GetMapping("/users")
-//    public RedirectView getUsers(Model m, Principal p) {
-//        AppUser loggedInUser = appUserRepository.findByUsername(p.getName());
-//        List<AppUser> users = appUserRepository.findAll();
-//        Set<AppUser> friends = loggedInUser.getFriends();
-//        users.remove(loggedInUser);
-//        m.addAttribute(users);
-//        m.addAttribute(friends);
-//        return new RedirectView("/users");
-//    }
+    @GetMapping("/users")
+    public String getUsers(Model m, Principal p) {
+        AppUser loggedInUser = appUserRepository.findByUsername(p.getName());
+        List<AppUser> users = appUserRepository.findAll();
+        System.out.println(Arrays.asList(users).toString());
+        Set<AppUser> friends = loggedInUser.getFriends();
+        System.out.println(Arrays.asList(friends).toString());
+
+        users.remove(loggedInUser);
+        m.addAttribute("loggedInUser", loggedInUser);
+        m.addAttribute("users", users);
+        m.addAttribute("friends", friends);
+        return "users";
+    }
 
     @GetMapping("/users/{id}")
     public String getUserInfoPage(@PathVariable long id, Model m, Principal p) {
@@ -73,6 +78,7 @@ public class AppUserController {
         return "signup";
     }
 
+
     @GetMapping("/login")
     public String getLoginPage(@RequestParam(required = false, defaultValue = "") String showMessage, Model m) {
         m.addAttribute("shouldShowExtraMessage", !showMessage.equals(""));
@@ -80,12 +86,13 @@ public class AppUserController {
     }
 
     @GetMapping("/myprofile")
-    public String getProfilePage(Principal p, Model m) {
+    public RedirectView getProfilePage(Principal p, Model m) {
         //System.out.println(p.getName());
         AppUser user = appUserRepository.findByUsername(p.getName());
+        Long id = user.id;
         m.addAttribute("user", user);
 
-        return "userinfo";
+        return new RedirectView("/users/" + id);
     }
 
     @PostMapping("/users/{id}/friends")
@@ -93,16 +100,18 @@ public class AppUserController {
         AppUser currentUser = appUserRepository.findById(id).get();
         AppUser newFriend = appUserRepository.findById(friend).get();
         // use the principal: check both  belong to the currently logged in user
-        if(!currentUser.username.equals(p.getName()) || !newFriend.username.equals(p.getName())) {
+        if(newFriend.username.equals(currentUser.username)) {
             throw new UserDoesNotBelongToYouException("You cannot be friends with yourself.");
         }
         // make them friends
         currentUser.friends.add(newFriend);
         newFriend.friends.add(currentUser);
+
         appUserRepository.save(currentUser);
         appUserRepository.save(newFriend);
+
         // redirect back to the current user
-        return new RedirectView("/users/" + id);
+        return new RedirectView("/users" );
     }
 
     @GetMapping("/feed")
@@ -110,6 +119,7 @@ public class AppUserController {
         //System.out.println(p.getName());
         AppUser user = appUserRepository.findByUsername(p.getName());
         m.addAttribute("user", user);
+
 
         return "userinfo";
     }

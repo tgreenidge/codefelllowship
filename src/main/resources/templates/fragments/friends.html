@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends</title>
+</head>
+<body>
+<ul th:fragment="friendsList(friends)">
+    <li th:each="friend : ${friends}">
+        <a th:href="'/users/' + ${friend.id}">
+            <span th:text="${friend.username}"></span>
+        </a>
+    </li>
+</ul>
+
+</body>
+</html>

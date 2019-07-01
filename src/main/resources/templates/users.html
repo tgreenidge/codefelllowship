@@ -9,12 +9,29 @@
 <body>
 
 <div th:replace="fragments/header :: header">...</div>
+<h3>Welcome, <span th:text="${loggedInUser.username}"></span></h3>
 
-<h3>Your Posts</h3>
+<h4>Your Friends</h4>
+<div th:replace="fragments/friends :: friendsList(friends=${loggedInUser.friends})"></div>
 
-<ul th:each="user : ${users}">
-    <li> <a th:href="/users/ + ${user.getId()}" th:text="${friend.contains(user)? : ${user.username} : follow"></a></li>
-</ul>
+<!--<div sec:authorize="isAuthenticated()">-->
+    <ul th:each="friend : ${friend}">
+        <li> <a th:href="@{/users/{id}(id=${friend.id})}"><span th:text="${friend.username}"></span></a></li>
+    </ul>
+<!--</div>-->
+
+<h3>Add a friend!</h3>
+<form method="POST" th:action="'/users/' + ${loggedInUser.id} + '/friends'">
+    <select name="friend">
+        <option
+                th:each="user : ${users}"
+                th:value="${user.id}"
+                th:text="${user.username}">
+        </option>
+    </select>
+    <input type="submit">
+
+</form>
 
 </body>
 </html>
