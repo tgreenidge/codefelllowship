@@ -15,6 +15,8 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -40,6 +42,17 @@ public class AppUserController {
 
         return new RedirectView("/myprofile");
     }
+
+//    @GetMapping("/users")
+//    public RedirectView getUsers(Model m, Principal p) {
+//        AppUser loggedInUser = appUserRepository.findByUsername(p.getName());
+//        List<AppUser> users = appUserRepository.findAll();
+//        Set<AppUser> friends = loggedInUser.getFriends();
+//        users.remove(loggedInUser);
+//        m.addAttribute(users);
+//        m.addAttribute(friends);
+//        return new RedirectView("/users");
+//    }
 
     @GetMapping("/users/{id}")
     public String getUserInfoPage(@PathVariable long id, Model m, Principal p) {
